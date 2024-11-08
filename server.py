@@ -33,7 +33,7 @@ def show_summary():
             return render_template('welcome.html', club=club, competitions=competitions)
 
     flash("Sorry, that email wasn't found.")
-    return render_template("index.html")
+    return index()
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
