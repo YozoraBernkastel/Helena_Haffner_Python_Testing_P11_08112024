@@ -2,26 +2,29 @@ from random import randint, choice
 from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS
 
 
-def init_random_data():
-    def choose_club_with_points() -> dict:
-        clubs: list = [club for club in MOCK_CLUBS if int(club["points"]) > 0]
+def choose_club_with_points() -> dict:
+    clubs: list = [club for club in MOCK_CLUBS if int(club["points"]) > 0]
 
-        if len(clubs) > 0:
-            return choice(clubs)
+    if len(clubs) > 0:
+        return choice(clubs)
 
-        raise Exception("There is no clubs with points")
+    raise Exception("There is no clubs with points")
 
-    def choose_comp_with_points() -> dict:
-        comps: list = [comp for comp in MOCK_COMPETITIONS if int(comp["numberOfPlaces"]) > 0]
 
-        if len(comps) > 0:
-            return choice(comps)
+def choose_comp_with_points() -> dict:
+    comps: list = [comp for comp in MOCK_COMPETITIONS if int(comp["numberOfPlaces"]) > 0]
 
-        raise Exception("There is no competition with remain places")
+    if len(comps) > 0:
+        return choice(comps)
 
+    raise Exception("There is no competition with remain places")
+
+
+def init_random_data() -> tuple[dict, dict, int, dict]:
     club = choose_club_with_points()
     competition = choose_comp_with_points()
-    valid_places = randint(1, max(12, int(club["points"])))
+    max_usable_club_points = randint(1, min(12, int(club["points"])))
+    valid_places = min(int(competition["numberOfPlaces"]), max_usable_club_points)
 
     valid_booking_form: dict = {"club": club["name"],
                                 "competition": competition["name"],
