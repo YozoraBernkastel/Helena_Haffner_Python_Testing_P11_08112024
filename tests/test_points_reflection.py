@@ -1,25 +1,58 @@
-from tests.mock import VALID_POINTS_BOOKING, CLUB, VALID_PLACES, COMPETITION
+from random import randint, choice
+from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS
+
+
+def init_random_data():
+    def choose_club_with_points() -> dict:
+        clubs: list = [club for club in MOCK_CLUBS if int(club["points"]) > 0]
+
+        if len(clubs) > 0:
+            return choice(clubs)
+
+        raise Exception("There is no clubs with points")
+
+    def choose_comp_with_points() -> dict:
+        comps: list = [comp for comp in MOCK_COMPETITIONS if int(comp["numberOfPlaces"]) > 0]
+
+        if len(comps) > 0:
+            return choice(comps)
+
+        raise Exception("There is no competition with remain places")
+
+    club = choose_club_with_points()
+    competition = choose_comp_with_points()
+    valid_places = randint(1, max(12, int(club["points"])))
+
+    valid_booking_form: dict = {"club": club["name"],
+                                "competition": competition["name"],
+                                "places": valid_places}
+
+    return club, competition, valid_places, valid_booking_form
 
 
 def test_user_points_are_removed(client, mock_clubs, mock_competitions):
-    club_places_before: int = int(CLUB["points"])
-    response = client.post("/purchasePlaces", data=VALID_POINTS_BOOKING)
+    club, comp, places_number, booking_form = init_random_data()
+
+    club_places_before: int = int(club["points"])
+    response = client.post("/purchasePlaces", data=booking_form)
 
     assert response.status_code == 200
 
-    club_places_after: int = int(CLUB["points"])
-    check_computation: bool = club_places_after == club_places_before - VALID_PLACES
+    club_places_after: int = int(club["points"])
+    check_computation: bool = club_places_after == club_places_before - places_number
 
     assert club_places_before > club_places_after and check_computation
 
 
 def test_competition_number_of_places_decrease(client):
-    club_places_before: int = int(COMPETITION["numberOfPlaces"])
-    response = client.post("/purchasePlaces", data=VALID_POINTS_BOOKING)
+    club, comp, places_number, booking_form = init_random_data()
+
+    club_places_before: int = int(comp["numberOfPlaces"])
+    response = client.post("/purchasePlaces", data=booking_form)
 
     assert response.status_code == 200
 
-    club_places_after: int = int(COMPETITION["numberOfPlaces"])
-    check_computation: bool = club_places_after == club_places_before - VALID_PLACES
+    club_places_after: int = int(comp["numberOfPlaces"])
+    check_computation: bool = club_places_after == club_places_before - places_number
 
     assert club_places_before > club_places_after and check_computation
