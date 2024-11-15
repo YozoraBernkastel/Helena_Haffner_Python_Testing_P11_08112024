@@ -12,8 +12,8 @@ def client():
 
 @pytest.fixture
 def mock_clubs():
-    server.clubs = MOCK_CLUBS["clubs"]
+    server.clubs = MOCK_CLUBS
 
 @pytest.fixture
 def mock_competitions():
-    server.competitions = MOCK_COMPETITIONS['competitions']
+    server.competitions = MOCK_COMPETITIONS
