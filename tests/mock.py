@@ -1,3 +1,5 @@
+from random import randint
+
 MOCK_COMPETITIONS: list = [
     {
         "name": "Winter Festival",
@@ -31,3 +33,13 @@ MOCK_CLUBS: list = [
 
 VALID_CONNECTION: dict = {"email": "test@test.test"}
 INVALID_CONNECTION: dict = {"email": "fausseadresse@mail.com"}
+
+
+CLUB = MOCK_CLUBS[0]
+COMPETITION = MOCK_COMPETITIONS[0]
+VALID_PLACES = randint(1, max(12, int(CLUB["points"])))
+
+VALID_POINTS_BOOKING: dict = {"club": CLUB["name"],
+                              "competition": COMPETITION["name"],
+                              "places": VALID_PLACES}
+
