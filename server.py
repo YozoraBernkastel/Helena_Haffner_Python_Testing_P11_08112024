@@ -1,6 +1,8 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, url_for
 
+from tests.mock import MAX_PURCHASE
+
 
 def load_clubs():
     with open('clubs.json') as c:
@@ -17,9 +19,10 @@ def load_competitions():
 app = Flask(__name__)
 app.secret_key = 'something_special'
 
-competitions = load_competitions()
-clubs = load_clubs()
-
+competitions: list = load_competitions()
+clubs: list = load_clubs()
+MIN_PURCHASE: int = 1
+MAX_PLACES: int = 12
 
 @app.route('/')
 def index():
@@ -51,9 +54,16 @@ def purchase_places():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     places_required = int(request.form['places'])
-    club["points"] = int(club["points"]) - places_required
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
-    flash('Great-booking complete!')
+
+    if MIN_PURCHASE <= places_required <= MAX_PLACES:
+        club["points"] = int(club["points"]) - places_required
+        competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
+        flash('Great-booking complete!')
+        return render_template('welcome.html', club=club, competitions=competitions)
+
+    # This part of the code can only be reached if the user purchase 0 place or if their manually
+    # change the HTML code, so we always want to give no place at this point.
+    flash("Aucune place n'a été reservée.")
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
