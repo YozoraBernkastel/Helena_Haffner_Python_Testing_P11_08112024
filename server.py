@@ -1,8 +1,6 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, url_for
 
-from tests.mock import MAX_PURCHASE
-
 
 def load_clubs():
     with open('clubs.json') as c:
@@ -21,7 +19,7 @@ app.secret_key = 'something_special'
 
 competitions: list = load_competitions()
 clubs: list = load_clubs()
-MIN_PURCHASE: int = 1
+MIN_PLACES: int = 1
 MAX_PLACES: int = 12
 
 @app.route('/')
@@ -55,7 +53,7 @@ def purchase_places():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     places_required = int(request.form['places'])
 
-    if MIN_PURCHASE <= places_required <= MAX_PLACES:
+    if MIN_PLACES <= places_required <= MAX_PLACES:
         club["points"] = int(club["points"]) - places_required
         competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
         flash('Great-booking complete!')
