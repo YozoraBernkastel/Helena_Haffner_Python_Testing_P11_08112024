@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import choice
 from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS
 
 
@@ -18,19 +18,18 @@ def choose_random_competition() -> dict:
 def init_random_data() -> tuple[dict, dict, int, dict]:
     club: dict = choose_random_club()
     competition: dict = choose_random_competition()
-
-    negative_places: int = randint(-12, -1)
+    no_purchase: int = 0
 
     too_many_purchases_form: dict = {"club": club["name"],
                                      "competition": competition["name"],
-                                     "places": negative_places}
+                                     "places": no_purchase}
 
-    return club, competition, negative_places, too_many_purchases_form
+    return club, competition, no_purchase, too_many_purchases_form
 
 
-def test_negative_purchase(client) -> None:
-    club, comp, negatives_places, booking_form = init_random_data()
-    assert negatives_places < 0
+def test_zero_purchase(client) -> None:
+    club, comp, zero_places, booking_form = init_random_data()
+    assert zero_places == 0
 
     club_places_before: int = int(club["points"])
     comp_places_before: int = int(comp["numberOfPlaces"])
