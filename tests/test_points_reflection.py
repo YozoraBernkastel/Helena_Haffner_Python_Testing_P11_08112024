@@ -1,23 +1,6 @@
-from random import randint, choice
-from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS, MAX_PURCHASE
-
-
-def choose_club_with_points() -> dict:
-    clubs: list = [club for club in MOCK_CLUBS if int(club["points"]) > 0]
-
-    if len(clubs) > 0:
-        return choice(clubs)
-
-    raise Exception("There is no clubs with points")
-
-
-def choose_comp_with_points() -> dict:
-    comps: list = [comp for comp in MOCK_COMPETITIONS if int(comp["numberOfPlaces"]) > 0]
-
-    if len(comps) > 0:
-        return choice(comps)
-
-    raise Exception("There is no competition with remain places")
+from random import randint
+from tests.mock import MAX_PURCHASE
+from tests.choice_data_helper import choose_comp_with_points, choose_club_with_points
 
 
 def init_random_data() -> tuple[dict, dict, int, dict]:

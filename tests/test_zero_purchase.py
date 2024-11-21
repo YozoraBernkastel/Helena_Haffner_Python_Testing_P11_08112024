@@ -1,19 +1,5 @@
-from random import choice
-from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS
+from tests.choice_data_helper import choose_random_club, choose_random_competition
 
-
-def choose_random_club() -> dict:
-    if len(MOCK_CLUBS) > 0:
-        return choice(MOCK_CLUBS)
-
-    raise Exception("There is no clubs in the data")
-
-
-def choose_random_competition() -> dict:
-    if len(MOCK_COMPETITIONS) > 0:
-        return choice(MOCK_COMPETITIONS)
-
-    raise Exception("There is no competition in the data")
 
 def init_random_data() -> tuple[dict, dict, int, dict]:
     club: dict = choose_random_club()
