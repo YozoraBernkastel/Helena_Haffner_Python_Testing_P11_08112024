@@ -1,5 +1,5 @@
 from random import randint, choice
-from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS
+from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS, MAX_PURCHASE
 
 
 def choose_club_with_points() -> dict:
@@ -21,10 +21,10 @@ def choose_comp_with_points() -> dict:
 
 
 def init_random_data() -> tuple[dict, dict, int, dict]:
-    club = choose_club_with_points()
-    competition = choose_comp_with_points()
-    max_usable_club_points = randint(1, min(12, int(club["points"])))
-    valid_places = min(int(competition["numberOfPlaces"]), max_usable_club_points)
+    club: dict = choose_club_with_points()
+    competition: dict = choose_comp_with_points()
+    max_usable_club_points: int = randint(1, min(MAX_PURCHASE, int(club["points"])))
+    valid_places: int = min(int(competition["numberOfPlaces"]), max_usable_club_points)
 
     valid_booking_form: dict = {"club": club["name"],
                                 "competition": competition["name"],
@@ -33,7 +33,7 @@ def init_random_data() -> tuple[dict, dict, int, dict]:
     return club, competition, valid_places, valid_booking_form
 
 
-def test_user_points_are_removed(client, mock_clubs, mock_competitions):
+def test_user_points_are_removed(client, mock_clubs, mock_competitions) -> None:
     club, comp, places_number, booking_form = init_random_data()
 
     club_places_before: int = int(club["points"])
@@ -47,7 +47,7 @@ def test_user_points_are_removed(client, mock_clubs, mock_competitions):
     assert club_places_before > club_places_after and check_computation
 
 
-def test_competition_number_of_places_decrease(client):
+def test_competition_number_of_places_decrease(client) -> None:
     club, comp, places_number, booking_form = init_random_data()
 
     club_places_before: int = int(comp["numberOfPlaces"])

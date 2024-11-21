@@ -33,3 +33,4 @@ MOCK_CLUBS: list = [
 
 VALID_CONNECTION: dict = {"email": "test@test.test"}
 INVALID_CONNECTION: dict = {"email": "fausseadresse@mail.com"}
+MAX_PURCHASE: int = 12
