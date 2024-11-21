@@ -1,5 +1,3 @@
-from random import randint, choice
-
 MOCK_COMPETITIONS: list = [
     {
         "name": "Winter Festival",
