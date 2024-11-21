@@ -1,24 +1,6 @@
-from random import randint, choice
-from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS, MAX_PURCHASE
-
-
-def choose_club_with_more_than_twelve_points() -> dict:
-    clubs: list = [club for club in MOCK_CLUBS if int(club["points"]) > MAX_PURCHASE]
-
-    if len(clubs) > 0:
-        return choice(clubs)
-
-    raise Exception("There is no clubs with more than 12 points")
-
-
-def choose_comp_with_more_than_twelve_points() -> dict:
-    comps: list = [comp for comp in MOCK_COMPETITIONS if int(comp["numberOfPlaces"]) > MAX_PURCHASE]
-
-    if len(comps) > 0:
-        return choice(comps)
-
-    raise Exception("There is no competition with more than 12 remain places")
-
+from random import randint
+from tests.mock import MAX_PURCHASE
+from tests.choice_data_helper import choose_club_with_more_than_twelve_points, choose_comp_with_more_than_twelve_points
 
 def max_available_purchase(club_points: str, comp_places: str) -> int:
     club_points = int(club_points)

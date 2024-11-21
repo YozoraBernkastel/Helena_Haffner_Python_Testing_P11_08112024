@@ -8,6 +8,11 @@ MOCK_COMPETITIONS: list = [
         "name": "Fall Vanilla",
         "date": "2020-10-22 13:30:00",
         "numberOfPlaces": "13"
+    },
+{
+        "name": "Spring Flower",
+        "date": "2020-10-22 13:30:00",
+        "numberOfPlaces": "3"
     }
 ]
 

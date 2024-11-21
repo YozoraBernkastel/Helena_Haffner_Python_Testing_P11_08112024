@@ -36,16 +36,22 @@ def show_summary():
     flash("Sorry, that email wasn't found.")
     return index()
 
+def max_allowed_places(club_point: str, comp_places: str) -> int:
+    limit_places: int = min(int(club_point), int(comp_places))
+    return min(MAX_PLACES, limit_places)
+
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
     found_club = [c for c in clubs if c['name'] == club][0]
     found_competition = [c for c in competitions if c['name'] == competition][0]
+
     if found_club and found_competition:
-        return render_template('booking.html', club=found_club, competition=found_competition)
+        max_allowed = max_allowed_places(found_club["points"], found_competition["numberOfPlaces"])
+        return render_template('booking.html', club=found_club,
+                               competition=found_competition, max_allowed=max_allowed)
     else:
         flash("Something went wrong-please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
-
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
@@ -53,13 +59,16 @@ def purchase_places():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     places_required = int(request.form['places'])
 
-    if MIN_PLACES <= places_required <= MAX_PLACES:
-        club["points"] = int(club["points"]) - places_required
-        competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
-        flash('Great-booking complete!')
-        return render_template('welcome.html', club=club, competitions=competitions)
+    if club and competition:
+        max_allowed = max_allowed_places(club["points"], competition["numberOfPlaces"])
 
-    # This part of the code can only be reached if the user purchase 0 place or if their manually
+        if MIN_PLACES <= places_required <= max_allowed:
+            club["points"] = int(club["points"]) - places_required
+            competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
+            flash('Great-booking complete!')
+            return render_template('welcome.html', club=club, competitions=competitions)
+
+    # This part of the code can only be reached if the user purchase 0 place or if they manually
     # change the HTML code, so we always want to give no place at this point.
     flash("Aucune place n'a été reservée.")
     return render_template('welcome.html', club=club, competitions=competitions)
