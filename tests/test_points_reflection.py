@@ -33,29 +33,23 @@ def init_random_data() -> tuple[dict, dict, int, dict]:
     return club, competition, valid_places, valid_booking_form
 
 
-def test_user_points_are_removed(client, mock_clubs, mock_competitions) -> None:
+def test_points_and_places_update(client, mock_clubs, mock_competitions) -> None:
     club, comp, places_number, booking_form = init_random_data()
 
     club_places_before: int = int(club["points"])
+    comp_places_before: int = int(comp["numberOfPlaces"])
     response = client.post("/purchasePlaces", data=booking_form)
 
     assert response.status_code == 200
 
     club_places_after: int = int(club["points"])
-    check_computation: bool = club_places_after == club_places_before - places_number
+    comp_places_after: int = int(comp["numberOfPlaces"])
+    check_points_computation: bool = club_places_after == club_places_before - places_number
+    check_places_computation: bool = comp_places_after == comp_places_before - places_number
 
-    assert club_places_before > club_places_after and check_computation
+    assert club_places_before > club_places_after and check_points_computation
+    assert comp_places_before > comp_places_after and check_places_computation
 
-
-def test_competition_number_of_places_decrease(client) -> None:
-    club, comp, places_number, booking_form = init_random_data()
-
-    club_places_before: int = int(comp["numberOfPlaces"])
-    response = client.post("/purchasePlaces", data=booking_form)
-
-    assert response.status_code == 200
-
-    club_places_after: int = int(comp["numberOfPlaces"])
-    check_computation: bool = club_places_after == club_places_before - places_number
-
-    assert club_places_before > club_places_after and check_computation
+    # reset data as we want correct data for the next units tests
+    club["points"] = str(club_places_before)
+    comp["numberOfPlaces"] = str(comp_places_before)
