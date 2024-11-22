@@ -16,4 +16,5 @@ def mock_clubs():
 
 @pytest.fixture
 def mock_competitions():
+    server.past_competition_places_filter(MOCK_COMPETITIONS)
     server.competitions = MOCK_COMPETITIONS

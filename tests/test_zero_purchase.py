@@ -27,3 +27,4 @@ def test_zero_purchase(client) -> None:
 
     assert club_places_before == club_places_after
     assert comp_places_before == comp_places_after
+    assert b"No place purchased." in response.data

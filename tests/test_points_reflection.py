@@ -1,13 +1,11 @@
-from random import randint
-from tests.mock import MAX_PURCHASE
+from tests.mock import valid_places_purchase
 from tests.choice_data_helper import choose_comp_with_points, choose_club_with_points
 
 
 def init_random_data() -> tuple[dict, dict, int, dict]:
     club: dict = choose_club_with_points()
     competition: dict = choose_comp_with_points()
-    max_usable_club_points: int = randint(1, min(MAX_PURCHASE, int(club["points"])))
-    valid_places: int = min(int(competition["numberOfPlaces"]), max_usable_club_points)
+    valid_places: int = valid_places_purchase(club, competition)
 
     valid_booking_form: dict = {"club": club["name"],
                                 "competition": competition["name"],
