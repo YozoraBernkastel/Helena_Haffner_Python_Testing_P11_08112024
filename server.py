@@ -21,13 +21,11 @@ def past_competition_places_filter(competitions_list: list) -> None:
         if is_competition_in_past(comp["date"]):
             comp["numberOfPlaces"] = 0
 
-
 def load_competitions():
     with open('competitions.json') as comps:
         list_of_competitions = json.load(comps)['competitions']
         past_competition_places_filter(list_of_competitions)
         return list_of_competitions
-
 
 app = Flask(__name__)
 app.secret_key = 'something_special'
@@ -39,7 +37,6 @@ clubs: list = load_clubs()
 def index():
     return render_template('index.html')
 
-
 @app.route('/showSummary', methods=['POST'])
 def show_summary():
     for club in clubs:
@@ -49,11 +46,9 @@ def show_summary():
     flash("Sorry, that email wasn't found.")
     return index()
 
-
 def max_allowed_places(club_point: str, comp_places: str) -> int:
     limit_places: int = min(int(club_point), int(comp_places))
     return min(MAX_PLACES, limit_places)
-
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
@@ -67,7 +62,6 @@ def book(competition, club):
     else:
         flash("Something went wrong-please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
-
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
@@ -93,9 +87,7 @@ def purchase_places():
     flash("No place purchased.")
     return render_template('welcome.html', club=club, competitions=competitions)
 
-
 # TODO: Add route for points display
-
 
 @app.route('/logout')
 def logout():
