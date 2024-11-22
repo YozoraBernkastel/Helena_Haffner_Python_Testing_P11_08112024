@@ -1,4 +1,4 @@
-from random import randint, choice
+from random import choice
 from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS, MAX_PURCHASE
 
 def choose_club_with_points() -> dict:

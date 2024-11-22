@@ -77,7 +77,7 @@ def purchase_places():
 
     if club and competition:
         if is_competition_in_past(competition["date"]):
-            flash("Impossible de s'inscrire, cette compétition a déjà eu lieu.")
+            flash("no place attribute ... the competition is already done.")
             return render_template('welcome.html', club=club, competitions=competitions)
 
         max_allowed = max_allowed_places(club["points"], competition["numberOfPlaces"])
@@ -90,7 +90,7 @@ def purchase_places():
 
     # This part of the code can only be reached if the user purchase 0 place or if they manually
     # change the HTML code, so we always want to give no place at this point.
-    flash("Aucune place n'a été reservée.")
+    flash("No place purchased.")
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
