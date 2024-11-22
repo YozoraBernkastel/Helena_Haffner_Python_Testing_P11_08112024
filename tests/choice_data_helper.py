@@ -1,4 +1,5 @@
 from random import choice
+from server import is_competition_in_past
 from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS, MAX_PURCHASE
 
 def choose_club_with_points() -> dict:
@@ -27,8 +28,9 @@ def choose_random_club() -> dict:
 
 
 def choose_random_competition() -> dict:
-    if len(MOCK_COMPETITIONS) > 0:
-        return choice(MOCK_COMPETITIONS)
+    competitions: list = [comp for comp in MOCK_COMPETITIONS if not is_competition_in_past(comp["date"])]
+    if len(competitions) > 0:
+        return choice(competitions)
 
     raise Exception("There is no competition in the data")
 

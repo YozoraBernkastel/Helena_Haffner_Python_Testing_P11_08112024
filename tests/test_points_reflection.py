@@ -1,4 +1,5 @@
 from random import randint
+from datetime import datetime
 from tests.mock import MAX_PURCHASE
 from tests.choice_data_helper import choose_comp_with_points, choose_club_with_points
 
@@ -6,6 +7,7 @@ from tests.choice_data_helper import choose_comp_with_points, choose_club_with_p
 def init_random_data() -> tuple[dict, dict, int, dict]:
     club: dict = choose_club_with_points()
     competition: dict = choose_comp_with_points()
+    competition["date"] = str(datetime.now())
     max_usable_club_points: int = randint(1, min(MAX_PURCHASE, int(club["points"])))
     valid_places: int = min(int(competition["numberOfPlaces"]), max_usable_club_points)
 
