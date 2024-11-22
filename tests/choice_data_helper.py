@@ -66,3 +66,11 @@ def choose_comp_with_less_than_twelve_points() -> dict:
         return choice(comps)
 
     raise Exception("There is no competition with less than 12 remain places")
+
+def choose_random_past_competition():
+    comps: list = [comp for comp in MOCK_COMPETITIONS if is_competition_in_past(comp["date"])]
+
+    if len(comps) > 0:
+        return choice(comps)
+
+    raise Exception("There is no past competition.")

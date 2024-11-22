@@ -1,4 +1,4 @@
-from server import past_competition_places_filter
+from random import randint
 
 MOCK_COMPETITIONS: list = [
     {
@@ -8,17 +8,17 @@ MOCK_COMPETITIONS: list = [
     },
     {
         "name": "Fall Classic",
-        "date": "2025-10-22 13:30:00",
+        "date": "2020-10-22 13:30:00",
         "numberOfPlaces": "13"
     },
     {
         "name": "Fall Classic 五",
-        "date": "2025-10-12 13:30:00",
+        "date": "2020-10-12 13:30:00",
         "numberOfPlaces": "2"
     },
     {
-        "name": "Winter Lift",
-        "date": "2025-12-21 18:36:00",
+        "name": "Winter Left",
+        "date": "2020-12-21 18:36:00",
         "numberOfPlaces": "37"
     }
 ]
@@ -45,3 +45,7 @@ VALID_CONNECTION: dict = {"email": "test@test.test"}
 INVALID_CONNECTION: dict = {"email": "fausseadresse@mail.com"}
 MAX_PURCHASE: int = 12
 
+
+def valid_places_purchase(club: dict, competition: dict) -> int:
+    max_usable_club_points: int = randint(1, min(MAX_PURCHASE, int(club["points"])))
+    return min(int(competition["numberOfPlaces"]), max_usable_club_points)
