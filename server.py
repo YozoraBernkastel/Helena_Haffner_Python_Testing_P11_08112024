@@ -50,42 +50,55 @@ def max_allowed_places(club_point: str, comp_places: str) -> int:
     limit_places: int = min(int(club_point), int(comp_places))
     return min(MAX_PLACES, limit_places)
 
+
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    found_club = [c for c in clubs if c['name'] == club][0]
-    found_competition = [c for c in competitions if c['name'] == competition][0]
+    found_club = [c for c in clubs if c['name'] == club]
+    found_competition = [c for c in competitions if c['name'] == competition]
 
     if found_club and found_competition:
-        max_allowed = max_allowed_places(found_club["points"], found_competition["numberOfPlaces"])
-        return render_template('booking.html', club=found_club,
-                               competition=found_competition, max_allowed=max_allowed)
+        this_club = found_club[0]
+        this_competition = found_competition[0]
+        max_allowed = max_allowed_places(this_club["points"], this_competition["numberOfPlaces"])
+        return render_template('booking.html', club=this_club,
+                               competition=this_competition, max_allowed=max_allowed)
     else:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        if found_club:
+            return render_template('welcome.html', club=club, competitions=competitions)
+
+        return render_template('index.html')
+
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
-    competition = [c for c in competitions if c['name'] == request.form['competition']][0]
-    club = [c for c in clubs if c['name'] == request.form['club']][0]
+    competition = [c for c in competitions if c['name'] == request.form['competition']]
+    club = [c for c in clubs if c['name'] == request.form['club']]
+
+    if not club or not competition:
+        flash("Something went wrong-please try again")
+        return render_template('index.html')
+
+    this_club = club[0]
+    this_competition = competition[0]
     places_required = int(request.form['places'])
 
-    if club and competition:
-        if is_competition_in_past(competition["date"]):
-            flash("no place attribute ... the competition is already done.")
-            return render_template('welcome.html', club=club, competitions=competitions)
+    if is_competition_in_past(this_competition["date"]):
+        flash("no place attribute ... the competition is already done.")
+        return render_template('welcome.html', club=this_club, competitions=competitions)
 
-        max_allowed = max_allowed_places(club["points"], competition["numberOfPlaces"])
+    max_allowed = max_allowed_places(this_club["points"], this_competition["numberOfPlaces"])
 
-        if MIN_PLACES <= places_required <= max_allowed:
-            club["points"] = int(club["points"]) - places_required
-            competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - places_required
-            flash('Great-booking complete!')
-            return render_template('welcome.html', club=club, competitions=competitions)
+    if MIN_PLACES <= places_required <= max_allowed:
+        this_club["points"] = int(this_club["points"]) - places_required
+        this_competition['numberOfPlaces'] = int(this_competition['numberOfPlaces']) - places_required
+        flash('Great-booking complete!')
+        return render_template('welcome.html', club=this_club, competitions=competitions)
 
     # This part of the code can only be reached if the user purchase 0 place or if they manually
     # change the HTML code, so we always want to give no place at this point.
     flash("No place purchased.")
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template('welcome.html', club=this_club, competitions=competitions)
 
 # TODO: Add route for points display
 
