@@ -1,4 +1,4 @@
-from tests.mock import valid_places_purchase
+from tests.data_helper import valid_places_purchase
 from tests.choice_data_helper import choose_comp_with_points, choose_club_with_points
 
 
