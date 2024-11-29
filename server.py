@@ -115,6 +115,9 @@ def points_table():
 # todo mettre éventuellement une redirection vers welcome.html + faire un test unitaire pour accéder à la page
 #  et vérifier qu'on a les bonnes valeurs aux bons endroits ?
 
+# todo peut-être tenter d'utiliser redirect (voir logout) plutôt que render lorsqu'on redirige sur une page différente
+#  suite à un problème
+
 @app.route('/logout')
 def logout():
     return redirect(url_for('index'))
