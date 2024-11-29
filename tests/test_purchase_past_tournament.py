@@ -1,6 +1,6 @@
 from server import is_competition_in_past
 from tests.choice_data_helper import choose_club_with_points, choose_random_past_competition
-from tests.mock import valid_places_purchase
+from tests.data_helper import valid_places_purchase
 
 
 def init_random_data() -> tuple[dict, dict, int, dict]:
