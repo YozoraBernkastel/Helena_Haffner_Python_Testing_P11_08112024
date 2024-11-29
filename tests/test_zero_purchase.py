@@ -1,9 +1,9 @@
-from tests.choice_data_helper import choose_random_club, choose_random_competition
+from tests.data_helper import valid_data
+from tests.mock import NO_PURCHASE_MESSAGE
 
 
-def init_random_data() -> tuple[dict, dict, int, dict]:
-    club: dict = choose_random_club()
-    competition: dict = choose_random_competition()
+def init_data() -> tuple[dict, dict, int, dict]:
+    club, competition = valid_data()
     no_purchase: int = 0
 
     too_many_purchases_form: dict = {"club": club["name"],
@@ -14,7 +14,7 @@ def init_random_data() -> tuple[dict, dict, int, dict]:
 
 
 def test_zero_purchase(client) -> None:
-    club, comp, zero_places, booking_form = init_random_data()
+    club, comp, zero_places, booking_form = init_data()
     assert zero_places == 0
 
     club_places_before: int = int(club["points"])
@@ -27,4 +27,4 @@ def test_zero_purchase(client) -> None:
 
     assert club_places_before == club_places_after
     assert comp_places_before == comp_places_after
-    assert b"No place purchased." in response.data
+    assert NO_PURCHASE_MESSAGE in response.data

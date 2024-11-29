@@ -1,10 +1,12 @@
 import pytest
 import server
+from tests.data_helper import check_data_existence
 from tests.mock import MOCK_CLUBS, MOCK_COMPETITIONS
 
 @pytest.fixture
 def client():
     server.app.config.update({"TESTING": True})
+    check_data_existence()
 
     with server.app.test_client() as client:
         yield client
