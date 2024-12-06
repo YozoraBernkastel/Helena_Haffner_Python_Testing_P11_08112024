@@ -14,7 +14,7 @@ def test_connexion_with_existing_mail(client, mock_clubs, mock_competitions):
     response = client.post("/showSummary", data=VALID_CONNECTION)
     assert response.status_code == 200
     assert WELCOME_PAGE in response.data
-    assert welcome_club(THIRTEEN_POINTS_CLUB["name"])
+    assert welcome_club(THIRTEEN_POINTS_CLUB["email"]) in response.data
 
 
 def test_connexion_with_unknown_mail(client, mock_clubs, mock_competitions):
