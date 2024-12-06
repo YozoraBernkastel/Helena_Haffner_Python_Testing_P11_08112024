@@ -1,5 +1,8 @@
 import json
+from crypt import methods
 from datetime import date, datetime
+from keyword import kwlist
+
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 MIN_PLACES: int = 1
@@ -67,7 +70,7 @@ def book(competition, club):
         if found_club:
             return render_template('welcome.html', club=club, competitions=competitions)
         else:
-            return render_template('index.html')
+            return redirect(url_for('index'))
 
     this_club = found_club[0]
     this_competition = found_competition[0]
@@ -85,14 +88,14 @@ def purchase_places():
 
     if not club or not competition:
         flash("Something went wrong-please try again")
-        return render_template('index.html')
+        return redirect(url_for('index'))
 
     this_club = club[0]
     this_competition = competition[0]
     places_required = int(request.form['places'])
 
     if is_competition_in_past(this_competition["date"]):
-        flash("no place attribute ... the competition is already done.")
+        flash("No place attribute ... the competition is already done.")
         return render_template('welcome.html', club=this_club, competitions=competitions)
 
     max_allowed = max_allowed_places(this_club["points"], this_competition["numberOfPlaces"])
@@ -100,7 +103,7 @@ def purchase_places():
     if MIN_PLACES <= places_required <= max_allowed:
         this_club["points"] = int(this_club["points"]) - places_required
         this_competition['numberOfPlaces'] = int(this_competition['numberOfPlaces']) - places_required
-        flash('Great-booking complete!')
+        flash(f'Great-booking complete! You just reserved {places_required} places !')
         return render_template('welcome.html', club=this_club, competitions=competitions)
 
     # This part of the code can only be reached if the user purchase 0 place or if they manually

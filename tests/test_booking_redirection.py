@@ -16,9 +16,8 @@ def test_unknown_club_redirection(client, mock_clubs, mock_competitions):
     club_name = INVALID_CLUB
 
     response = client.get(f"/book/{comp_name}/{club_name}")
-    assert response.status_code == 200
+    assert response.status_code == 302
     assert not booking_page(comp_name) in response.data
-    assert INDEX_PAGE in response.data
 
 def test_unknown_comp_redirection(client, mock_clubs, mock_competitions):
     comp_name = INVALID_COMP
