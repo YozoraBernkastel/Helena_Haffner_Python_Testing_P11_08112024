@@ -1,4 +1,4 @@
-from tests.mock import MOCK_COMPETITIONS, MOCK_CLUBS, THIRTEEN_POINTS_CLUB, THIRTY_SEVEN_PLACES_COMP
+from tests.mock import MOCK_COMPETITIONS, MOCK_CLUBS, THIRTEEN_POINTS_CLUB, FUTURE_THIRTY_SEVEN_PLACES_COMP
 
 
 def booking_page(comp_name) -> bytes:
@@ -21,4 +21,4 @@ def check_data_existence():
         raise Exception("There is no clubs in the mock data")
 
 def valid_data() -> tuple[dict, dict]:
-    return THIRTEEN_POINTS_CLUB, THIRTY_SEVEN_PLACES_COMP
+    return THIRTEEN_POINTS_CLUB, FUTURE_THIRTY_SEVEN_PLACES_COMP

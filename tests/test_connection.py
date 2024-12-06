@@ -1,3 +1,5 @@
+from flask import url_for, request
+
 from tests.mock import VALID_CONNECTION, THIRTEEN_POINTS_CLUB, INVALID_CONNECTION, INDEX_PAGE, WELCOME_PAGE
 from tests.data_helper import welcome_club
 
@@ -21,3 +23,7 @@ def test_connexion_with_unknown_mail(client, mock_clubs, mock_competitions):
     assert not WELCOME_PAGE in response.data
     assert INDEX_PAGE in response.data
 
+def test_logout(client, mock_clubs, mock_competitions):
+    response = client.get("/logout")
+    assert response.status_code == 302
+    assert request.path == url_for('logout')

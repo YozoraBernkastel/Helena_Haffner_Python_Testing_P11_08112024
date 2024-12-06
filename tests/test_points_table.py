@@ -1,4 +1,4 @@
-from tests.mock import POINTS_TABLE_PAGE, MOCK_CLUBS
+from tests.mock import POINTS_TABLE_PAGE
 
 def test_points_table_route(client, mock_clubs, mock_competitions):
     response = client.get("/points_table")
