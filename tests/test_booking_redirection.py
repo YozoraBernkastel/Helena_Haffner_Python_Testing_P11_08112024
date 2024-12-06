@@ -1,10 +1,10 @@
 from tests.data_helper import booking_page
 from tests.conftest import mock_clubs, mock_competitions
-from tests.mock import VALID_COMP, INVALID_COMP, THIRTEEN_POINTS_CLUB, INVALID_CLUB, INDEX_PAGE, WELCOME_PAGE, THIRTY_SEVEN_PLACES_COMP
+from tests.mock import VALID_COMP, INVALID_COMP, THIRTEEN_POINTS_CLUB, INVALID_CLUB, INDEX_PAGE, WELCOME_PAGE, FUTURE_THIRTY_SEVEN_PLACES_COMP
 
 
 def test_valid_redirection(client, mock_clubs, mock_competitions):
-    comp_name = THIRTY_SEVEN_PLACES_COMP["name"]
+    comp_name = FUTURE_THIRTY_SEVEN_PLACES_COMP["name"]
     club_name = THIRTEEN_POINTS_CLUB["name"]
 
     response = client.get(f"/book/{comp_name}/{club_name}")

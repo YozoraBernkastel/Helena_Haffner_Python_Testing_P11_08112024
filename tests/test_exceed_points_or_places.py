@@ -1,12 +1,12 @@
 from server import MAX_PLACES
 from tests.data_helper import html_club_points
-from tests.mock import FOUR_POINTS_CLUB, THIRTY_SEVEN_PLACES_COMP, WELCOME_PAGE, THIRTEEN_POINTS_CLUB, \
-    TWO_PLACES_COMP, NO_PURCHASE_MESSAGE
+from tests.mock import FOUR_POINTS_CLUB, FUTURE_THIRTY_SEVEN_PLACES_COMP, WELCOME_PAGE, THIRTEEN_POINTS_CLUB, \
+    TODAY_TWO_PLACES_COMP, NO_PURCHASE_MESSAGE
 
 
 def init_data_exceeds_club_points() -> tuple[dict, dict, int, dict]:
     club: dict = FOUR_POINTS_CLUB
-    competition: dict = THIRTY_SEVEN_PLACES_COMP
+    competition: dict = FUTURE_THIRTY_SEVEN_PLACES_COMP
 
     too_many_purchases_form: dict = {"club": club["name"],
                                      "competition": competition["name"],
@@ -38,7 +38,7 @@ def test_exceeds_club_points(client) -> None:
 
 def init_data_exceeds_comp_places() -> tuple[dict, dict, int, dict]:
     club: dict = THIRTEEN_POINTS_CLUB
-    competition: dict = TWO_PLACES_COMP
+    competition: dict = TODAY_TWO_PLACES_COMP
 
     too_many_purchases_form: dict = {"club": club["name"],
                                      "competition": competition["name"],
