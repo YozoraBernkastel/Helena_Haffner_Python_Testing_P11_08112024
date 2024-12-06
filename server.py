@@ -79,6 +79,7 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
+    # todo mettre ces recherches dans des fonction comme utilisés à plusieurs endroits
     competition = [c for c in competitions if c['name'] == request.form['competition']]
     club = [c for c in clubs if c['name'] == request.form['club']]
 
@@ -108,10 +109,17 @@ def purchase_places():
     return render_template('welcome.html', club=this_club, competitions=competitions)
 
 
-# TODO: Add route for points display
+@app.route("/points_table")
+def points_table():
+    return render_template('points_table.html', clubs=clubs)
+
+# todo mettre éventuellement une redirection vers welcome.html + faire un test unitaire pour accéder à la page
+#  et vérifier qu'on a les bonnes valeurs aux bons endroits ?
+
+# todo peut-être tenter d'utiliser redirect (voir logout) plutôt que render lorsqu'on redirige sur une page différente
+#  suite à un problème
 
 @app.route('/logout')
 def logout():
     return redirect(url_for('index'))
 
-#  todo faire les tests unitaires pour véririfer que l'on est bien renvoyé sur la page index si aucun nom de club ou de compétition n'est trouvé dans la bdd

@@ -8,6 +8,7 @@ INVALID_COMP: str = "No Existing Festival"
 NO_PURCHASE_MESSAGE: bytes = b"No place purchased."
 INDEX_PAGE: bytes = b"<title>GUDLFT Registration</title>"
 WELCOME_PAGE: bytes = b"<title>Summary | GUDLFT Registration</title>"
+POINTS_TABLE_PAGE = b"<title>Points' Table | GUDLFT</title>"
 
 THIRTY_SEVEN_PLACES_COMP = {"name": "Thirty Seven Places Comp", "date": "2027-12-21 18:36:00", "numberOfPlaces": "37"}
 TWO_PLACES_COMP = {"name": "Two Places Comp", "date": "2027-12-21 18:36:00", "numberOfPlaces": "2"}
