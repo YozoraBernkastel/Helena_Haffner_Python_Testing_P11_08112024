@@ -79,6 +79,7 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
+    # todo mettre ces recherches dans des fonction comme utilisés à plusieurs endroits
     competition = [c for c in competitions if c['name'] == request.form['competition']]
     club = [c for c in clubs if c['name'] == request.form['club']]
 
