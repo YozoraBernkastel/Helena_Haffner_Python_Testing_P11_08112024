@@ -15,7 +15,7 @@ POINTS_TABLE_PAGE = b"<title>Points' Table | GUDLFT</title>"
 
 TOMORROW_DATE = f"{date.today() + timedelta(days=1)} 18:36:00"
 FUTURE_THIRTY_SEVEN_PLACES_COMP = {"name": VALID_COMP, "date": TOMORROW_DATE, "numberOfPlaces": "37"}
-
+FUTURE_ZERO_PLACE_COMP = {"name": "No Place Comp", "date": TOMORROW_DATE, "numberOfPlaces": "0"}
 TODAY_DATE = f"{date.today()} 18:36:00"
 TODAY_TWO_PLACES_COMP = {"name": "Two Places Comp", "date": TODAY_DATE, "numberOfPlaces": "2"}
 
@@ -26,7 +26,8 @@ PAST_COMP_UNLISTED = {"name": "Past Comp", "date": PAST_DATE, "numberOfPlaces": 
 MOCK_COMPETITIONS: list = [
     FUTURE_THIRTY_SEVEN_PLACES_COMP,
     TODAY_TWO_PLACES_COMP,
-    PAST_COMP
+    PAST_COMP,
+    FUTURE_ZERO_PLACE_COMP
 ]
 
 THIRTEEN_POINTS_CLUB: dict = {"name": VALID_CLUB, "email": VALID_CONNECTION["email"], "points": "13"}
