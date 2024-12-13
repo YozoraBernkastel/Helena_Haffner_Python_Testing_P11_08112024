@@ -75,6 +75,8 @@ def book(competition, club):
     return render_template('booking.html', club=found_club,
                            competition=found_competition, max_allowed=max_allowed)
 
+def comp_still_has_available_places(this_competition: dict) -> bool:
+    return int(this_competition["numberOfPlaces"]) > 0
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchase_places():
@@ -89,6 +91,10 @@ def purchase_places():
 
     if is_competition_in_past(this_competition["date"]):
         flash("No place attribute ... the competition is already done.")
+        return render_template('welcome.html', club=this_club, competitions=competitions)
+
+    if not comp_still_has_available_places(this_competition):
+        flash(f'Unfortunately the last places are not available anymore')
         return render_template('welcome.html', club=this_club, competitions=competitions)
 
     max_allowed = max_allowed_places(this_club["points"], this_competition["numberOfPlaces"])
