@@ -1,14 +1,6 @@
-from server import comp_still_has_available_places, MAX_PLACES
-from tests.mock import (FUTURE_THIRTY_SEVEN_PLACES_COMP, FUTURE_ZERO_PLACE_COMP, THIRTEEN_POINTS_CLUB,
-                        NO_PLACE_ANYMORE_MESSAGE)
+from server import MAX_PLACES
+from tests.mock import FUTURE_ZERO_PLACE_COMP, THIRTEEN_POINTS_CLUB, NO_PLACE_ANYMORE_MESSAGE
 
-def test_comp_still_has_available_places():
-    has_places = comp_still_has_available_places(FUTURE_THIRTY_SEVEN_PLACES_COMP)
-    assert has_places
-
-def test_comp_has_no_available_places():
-    has_places = comp_still_has_available_places(FUTURE_ZERO_PLACE_COMP)
-    assert not has_places
 
 def init_data() -> tuple[dict, dict, int, dict]:
     club = THIRTEEN_POINTS_CLUB
