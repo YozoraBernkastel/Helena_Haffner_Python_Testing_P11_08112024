@@ -1,5 +1,6 @@
 from server import comp_still_has_available_places, MAX_PLACES
-from tests.mock import FUTURE_THIRTY_SEVEN_PLACES_COMP, FUTURE_ZERO_PLACE_COMP, THIRTEEN_POINTS_CLUB
+from tests.mock import (FUTURE_THIRTY_SEVEN_PLACES_COMP, FUTURE_ZERO_PLACE_COMP, THIRTEEN_POINTS_CLUB,
+                        NO_PLACE_ANYMORE_MESSAGE)
 
 def test_comp_still_has_available_places():
     has_places = comp_still_has_available_places(FUTURE_THIRTY_SEVEN_PLACES_COMP)
@@ -32,6 +33,6 @@ def test_last_places_take_before_user_reservation(client) -> None:
     club_points_after: int = int(club["points"])
     comp_places_after: int = int(comp["numberOfPlaces"])
 
-    assert b"Unfortunately the last places are not available anymore" in response.data
+    assert NO_PLACE_ANYMORE_MESSAGE in response.data
     assert club_points_before == club_points_after
     assert comp_places_before == comp_places_after

@@ -12,6 +12,7 @@ NO_PURCHASE_MESSAGE: bytes = b"No place purchased."
 INDEX_PAGE: bytes = b"<title>GUDLFT Registration</title>"
 WELCOME_PAGE: bytes = b"<title>Summary | GUDLFT Registration</title>"
 POINTS_TABLE_PAGE = b"<title>Points' Table | GUDLFT</title>"
+NO_PLACE_ANYMORE_MESSAGE = b"Unfortunately the last places are not available anymore"
 
 TOMORROW_DATE = f"{date.today() + timedelta(days=1)} 18:36:00"
 FUTURE_THIRTY_SEVEN_PLACES_COMP = {"name": VALID_COMP, "date": TOMORROW_DATE, "numberOfPlaces": "37"}
