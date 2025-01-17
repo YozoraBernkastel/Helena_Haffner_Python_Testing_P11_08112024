@@ -1,11 +1,10 @@
 # gudlift-registration
 
-1. Why
-
+## 1. Why
 
     This is a proof of concept (POC) project to show a light-weight version of our competition booking platform. The aim is the keep things as light as possible, and use feedback from the users to iterate.
 
-2. Getting Started
+## 2. Getting Started
 
     This project uses the following technologies:
 
@@ -14,16 +13,37 @@
     * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
         Whereas Django does a lot of things for us out of the box, Flask allows us to add only what we need. 
-     
 
-    * [Virtual environment](https://virtualenv.pypa.io/en/stable/installation.html)
+    This Fork of the project use Poetry as virtual Environnement.
 
-        This ensures you'll be able to install the correct packages without interfering with Python on your machine.
+## 3. Poetry as Virtual Environnement
 
-        Before you begin, please ensure you have this installed globally. 
+Installation of Poetry:
 
+   ```shell
+    curl -sSL https://install.python-poetry.org | python3 - 
+   ```
 
-3. Installation
+Enable the virtual Environment :
+
+   ```shell
+    poetry shell
+   ```
+
+Install Dependencies ( pyproject.toml or poetry.lock files must exist in the project -- they are the "requirements.txt"
+equivalent for Poetry):
+
+   ```shell
+    poetry install 
+   ```
+
+Disable the Virtual Environment :
+
+   ```shell
+    exit
+   ```
+
+## 4. Installation
 
     - After cloning, change into the directory and type <code>virtualenv .</code>. This will then set up a a virtual python environment within that directory.
 
@@ -35,17 +55,47 @@
 
     - You should now be ready to test the application. In the directory, type either <code>flask run</code> or <code>python -m flask run</code>. The app should respond with an address you should be able to go to using your browser.
 
-4. Current Setup
+## 5. Current Setup
 
     The app is powered by [JSON files](https://www.tutorialspoint.com/json/json_quick_guide.htm). This is to get around having a DB until we actually need one. The main ones are:
      
     * competitions.json - list of competitions
     * clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login.
 
-5. Testing
+## 6. Testing
 
-    You are free to use whatever testing framework you like-the main thing is that you can show what tests you are using.
+    The tests are done with Pytest.
 
-    We also like to show how well we're testing, so there's a module called 
-    [coverage](https://coverage.readthedocs.io/en/coverage-5.1/) you should add to your project.
+Use the command to run the tests :
+
+   ```shell
+    pytest
+   ```
+
+or, to remove the warnings:
+
+   ```shell
+    pytest --disable-warnings
+   ```
+
+To have a more complete view, Coverage can be use too. Run The command :
+
+   ```shell
+   coverage run -m pytest
+   ```
+
+or, to remove the warnings:
+
+   ```shell
+    coverage run -m pytest --disable-warnings
+   ```
+
+which will looks similar to the command "pytest" but will allow to use ...
+
+   ```shell
+    coverage html
+   ```
+
+... to have more detail on the coverage of the code through
+the html page generate (use the link given in response of the command).
 
